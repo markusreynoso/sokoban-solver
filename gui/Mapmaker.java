@@ -12,7 +12,7 @@ public class Mapmaker {
     char active = ' ';
 
     public void execute(){
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Map Maker");
         JPanel gridPanel = new JPanel();
         JPanel rightPanel = new JPanel();
         JButton playerButton = new JButton("<html><div style='text-align: center;'>Player</div></html>");
