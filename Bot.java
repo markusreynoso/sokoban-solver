@@ -14,7 +14,6 @@ public class Bot {
     }
 
     public boolean isSolved(State state){
-        // checks whether the current map state is solved or not
         for (char[] mapRow : state.getFullMapData()) {
             for (char c : mapRow) {
                 if (c == '$') {
@@ -36,7 +35,6 @@ public class Bot {
             case 'r' -> newX++;
         }
 
-        // Check if player is walking into a wall
         if (fullMap[newY][newX] == '#'){
             return false;
         }
@@ -330,7 +328,7 @@ public class Bot {
         return fullMapData;
     }
 
-    public int computeAStarScore(int cost, char[][] itemsData){
+    public int manhattan(int cost, char[][] itemsData){
         int m_distance;
         int[] targetPos = new int[2];
         int[] cratePos = new int[2];
@@ -408,7 +406,7 @@ public class Bot {
             }
         }
 
-        State initialState = new State(initialPlayerX, initialPlayerY, "", fullMapData, computeAStarScore(0, fullMapData));
+        State initialState = new State(initialPlayerX, initialPlayerY, "", fullMapData, manhattan(0, fullMapData));
         frontierStates.addFirst(initialState);
 
         while (!frontierStates.isEmpty()){
@@ -419,14 +417,13 @@ public class Bot {
                 if (!isLegal(parentState.getPlayerX(), parentState.getPlayerY(), parentState.getFullMapData(), move)){continue;}
                 updatedFullMapData = updateFullMap(parentState.getPlayerX(), parentState.getPlayerY(), copyMap(parentState.getFullMapData()), move);
 
-                // ToDo: improve deadlock checks
                 if (isDeadlocked(updatedFullMapData)){continue;}
 
                 String mapId = mapToString(updatedFullMapData);
                 if (visitedStates.contains(mapId)){continue;}
                 visitedStates.add(mapId);
 
-                int computedAStarScore = computeAStarScore(parentState.getMoveSequence().length() + 1, updatedFullMapData);
+                int computedAStarScore = manhattan(parentState.getMoveSequence().length() + 1, updatedFullMapData);
                 State newState = new State(parentState.getPlayerX(), parentState.getPlayerY(), parentState.getMoveSequence(), updatedFullMapData, computedAStarScore, move);
 
                 int insertIndex = 0;
