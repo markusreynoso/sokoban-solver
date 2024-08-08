@@ -15,6 +15,6 @@ If you're just interested in trying out the map editor and solver, go ahead and 
 2. Number of boxes should equal number of goals
 3. **Important:** Make sure the player is enclosed in walls \
 Do: \
-  ![Map fully enclosed](md_assets/do.png)
+  ![Map fully enclosed](md_assets/do.png) \
 Don't: \
-  ![Map not fully enclosed](md_assets/dont.png)
+  ![Map not fully enclosed](md_assets/dont.png) \
