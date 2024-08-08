@@ -207,14 +207,15 @@ public class Mapmaker {
             String moveSequence = bot.solveSokobanPuzzle(this.main.map);
             System.out.println(moveSequence);
 
-            JFrame frame = new JFrame("Solution");
+            JFrame animationFrame = new JFrame("Solution");
             SokobanGUI gui = new SokobanGUI(this.main.map, moveSequence);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(gui);
-            frame.pack();
-            frame.setVisible(true);
+            animationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            animationFrame.add(gui);
+            animationFrame.pack();
+            animationFrame.setVisible(true);
 
             gui.animateMoves();
+            animationFrame.setLocationRelativeTo(null);
         }
     }
 
