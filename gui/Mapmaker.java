@@ -1,12 +1,13 @@
 package gui;
 
+import solver.Bot;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
-public class Main {
+public class Mapmaker {
     public char[][] map = new char[25][25];
     char active = ' ';
 
@@ -138,9 +139,9 @@ public class Main {
     public static class GridButton implements ActionListener {
         private final int row;
         private final int col;
-        private final Main main;
+        private final Mapmaker main;
 
-        public GridButton(Main main, int row, int col) {
+        public GridButton(Mapmaker main, int row, int col) {
             this.row = row;
             this.col = col;
             this.main = main;
@@ -179,10 +180,10 @@ public class Main {
     }
 
     public static class ComponentButton implements ActionListener {
-        Main main;
+        Mapmaker main;
         char component;
 
-        public ComponentButton(Main main, char component) {
+        public ComponentButton(Mapmaker main, char component) {
             this.main = main;
             this.component = component;
         }
@@ -194,23 +195,31 @@ public class Main {
     }
 
     public static class StartButton implements ActionListener {
-        private final Main main;
+        private final Mapmaker main;
 
-        public StartButton(Main main) {
+        public StartButton(Mapmaker main) {
             this.main = main;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // ToDO
-            for (char[] row: this.main.map){
-                System.out.println(Arrays.toString(row));
-            }
+            Bot bot = new Bot();
+            String moveSequence = bot.solveSokobanPuzzle(this.main.map);
+            System.out.println(moveSequence);
+
+            JFrame frame = new JFrame("Solution");
+            SokobanGUI gui = new SokobanGUI(this.main.map, moveSequence);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(gui);
+            frame.pack();
+            frame.setVisible(true);
+
+            gui.animateMoves();
         }
     }
 
     public static void main(String[] args) {
-        Main main = new Main();
+        Mapmaker main = new Mapmaker();
         main.execute();
     }
 }

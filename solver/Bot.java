@@ -368,47 +368,26 @@ public class Bot {
         return sb.toString();
     }
 
-    public String solveSokobanPuzzle(int width, int height, char[][] mapData, char[][] itemsData) {
+    public String solveSokobanPuzzle(char[][] mapData) {
         final char[] moves = {'u', 'l', 'd', 'r'};
         LinkedList<State> frontierStates = new LinkedList<>();
         HashSet<String> visitedStates = new HashSet<>();
-        char[][] fullMapData = new char[height][width];
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (mapData[y][x] == '#') {
-                    fullMapData[y][x] = '#';
-                }
-                else if (mapData[y][x] == '.' && itemsData[y][x] == '@') {
-                    fullMapData[y][x] = '+';
-                }
-                else if (mapData[y][x] == '.' && itemsData[y][x] == '$') {
-                    fullMapData[y][x] = '*';
-                }
-                else if (mapData[y][x] == '.' && itemsData[y][x] == ' ') {
-                    fullMapData[y][x] = '.';
-                }
-                else {
-                    fullMapData[y][x] = itemsData[y][x];
-                }
-            }
-        }
 
         int initialPlayerX = 0;
         int initialPlayerY = 0;
         State parentState;
 
-
-        for (int y = 0; y < fullMapData.length; y++) {
-            for (int x = 1; x < fullMapData[y].length; x++) {
-                if (itemsData[y][x] == '@' || itemsData[y][x] == '+') {
+        for (int y = 0; y < mapData.length; y++) {
+            for (int x = 1; x < mapData[y].length; x++) {
+                if (mapData[y][x] == '@' || mapData[y][x] == '+') {
                     initialPlayerY = y;
                     initialPlayerX = x;
                 }
             }
         }
 
-        State initialState = new State(initialPlayerX, initialPlayerY, "", fullMapData, manhattan(0, fullMapData));
+        State initialState = new State(initialPlayerX, initialPlayerY, "", mapData, manhattan(0, mapData));
         frontierStates.addFirst(initialState);
 
         while (!frontierStates.isEmpty()){
