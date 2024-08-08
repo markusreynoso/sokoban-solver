@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 public class SokobanGUI extends JPanel {
     private final int GRID_SIZE = 25;
     private final int TILE_SIZE = 30;
-    private char[][] map;
-    private String moves;
+    private final char[][] map;
+    private final String moves;
     private int moveIndex = 0;
 
     public SokobanGUI(char[][] map, String moves) {
@@ -32,37 +32,31 @@ public class SokobanGUI extends JPanel {
                 Color color = getColorForChar(c);
                 g.setColor(color);
                 g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-                // Remove the following lines to stop drawing gridlines
-                // g.setColor(Color.BLACK);
-                // g.drawRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
         }
     }
 
     private Color getColorForChar(char c) {
         return switch (c) {
-            case '#' -> new Color(0xff6150);    // Wall
-            case '.' -> new Color(0xffcb00); // Target
-            case ' ' -> new Color(0xf0f0f0);    // Empty
-            case '@' -> new Color(0x072448);     // Player
+            case '#' -> new Color(0xff6150);
+            case '.' -> new Color(0xffcb00);
+            case ' ' -> new Color(0xf0f0f0);
+            case '@' -> new Color(0x072448);
             case '+' -> new Color(0x54d2d2);
-            case '$' -> new Color(0xf8aa4b);      // Box
-            case '*' -> new Color(0x54d2a0);    // Target with Box
+            case '$' -> new Color(0xf8aa4b);
+            case '*' -> new Color(0x54d2a0);
             default -> Color.WHITE;
         };
     }
 
     public void animateMoves() {
-        Timer timer = new Timer(200, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (moveIndex < moves.length()) {
-                    applyMove(moves.charAt(moveIndex));
-                    repaint();
-                    moveIndex++;
-                } else {
-                    ((Timer) e.getSource()).stop();
-                }
+        Timer timer = new Timer(300, e -> {
+            if (moveIndex < moves.length()) {
+                applyMove(moves.charAt(moveIndex));
+                repaint();
+                moveIndex++;
+            } else {
+                ((Timer) e.getSource()).stop();
             }
         });
         timer.start();
@@ -93,7 +87,7 @@ public class SokobanGUI extends JPanel {
         }
 
         if (newY < 0 || newY >= GRID_SIZE || newX < 0 || newX >= GRID_SIZE) {
-            return; // Move out of bounds
+            return;
         }
 
         destination = this.map[newY][newX];

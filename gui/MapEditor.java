@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Mapmaker {
+public class MapEditor {
     public char[][] map = new char[25][25];
     char active = ' ';
 
@@ -56,7 +56,7 @@ public class Mapmaker {
         rightPanel.setPreferredSize(new Dimension(180, 500));
         rightPanel.setLayout(new GridLayout(4,2,0,0));
 
-        Dimension buttonSize = new Dimension(160, 80); // Set a fixed size for the buttons
+        Dimension buttonSize = new Dimension(160, 80);
 
         playerButton.setPreferredSize(buttonSize);
         playerButton.setBackground(new Color(0x072448));
@@ -139,9 +139,9 @@ public class Mapmaker {
     public static class GridButton implements ActionListener {
         private final int row;
         private final int col;
-        private final Mapmaker main;
+        private final MapEditor main;
 
-        public GridButton(Mapmaker main, int row, int col) {
+        public GridButton(MapEditor main, int row, int col) {
             this.row = row;
             this.col = col;
             this.main = main;
@@ -152,38 +152,33 @@ public class Mapmaker {
             this.main.map[row][col] = this.main.active;
             Object source = e.getSource();
 
-            switch (this.main.active){
-                case '@': // Player
-                    ((JButton) source).setBackground(new Color(0x072448));
-                    break;
-                case '+': // Player on goal
-                    ((JButton) source).setBackground(new Color(0x54d2d2));
-                    break;
-                case '#': // Wall
-                    ((JButton) source).setBackground(new Color(0xff6150));
-                    break;
-                case '$': // Box
-                    ((JButton) source).setBackground(new Color(0xf8aa4b));
-                    break;
-                case '*': // Box on goal
-                    ((JButton) source).setBackground(new Color(0x54d2a0));
-                    break;
-                case '.': // Goal
-                    ((JButton) source).setBackground(new Color(0xffcb00));
-                    break;
-                case ' ':
-                    ((JButton) source).setBackground(new Color(0xf0f0f0));;
-                    break;
+            switch (this.main.active) {
+                case '@' -> // Player
+                        ((JButton) source).setBackground(new Color(0x072448));
+                case '+' -> // Player on goal
+                        ((JButton) source).setBackground(new Color(0x54d2d2));
+                case '#' -> // Wall
+                        ((JButton) source).setBackground(new Color(0xff6150));
+                case '$' -> // Box
+                        ((JButton) source).setBackground(new Color(0xf8aa4b));
+                case '*' -> // Box on goal
+                        ((JButton) source).setBackground(new Color(0x54d2a0));
+                case '.' -> // Goal
+                        ((JButton) source).setBackground(new Color(0xffcb00));
+                case ' ' -> {
+                    ((JButton) source).setBackground(new Color(0xf0f0f0));
+                    ;
+                }
             }
 
         }
     }
 
     public static class ComponentButton implements ActionListener {
-        Mapmaker main;
+        MapEditor main;
         char component;
 
-        public ComponentButton(Mapmaker main, char component) {
+        public ComponentButton(MapEditor main, char component) {
             this.main = main;
             this.component = component;
         }
@@ -194,10 +189,24 @@ public class Mapmaker {
         }
     }
 
-    public static class StartButton implements ActionListener {
-        private final Mapmaker main;
+    public char[][] copyMap(char[][] original) {
+        if (original == null) {
+            return null;
+        }
 
-        public StartButton(Mapmaker main) {
+        char[][] copy = new char[original.length][];
+        for (int i = 0; i < original.length; i++) {
+            copy[i] = new char[original[i].length];
+            System.arraycopy(original[i], 0, copy[i], 0, original[i].length);
+        }
+        return copy;
+    }
+
+
+    public static class StartButton implements ActionListener {
+        private final MapEditor main;
+
+        public StartButton(MapEditor main) {
             this.main = main;
         }
 
@@ -206,10 +215,10 @@ public class Mapmaker {
             Bot bot = new Bot();
             String moveSequence = bot.solveSokobanPuzzle(this.main.map);
             System.out.println(moveSequence);
-
+            char[][] mapCopy = main.copyMap(this.main.map);
             JFrame animationFrame = new JFrame("Solution");
-            SokobanGUI gui = new SokobanGUI(this.main.map, moveSequence);
-            animationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            SokobanGUI gui = new SokobanGUI(mapCopy, moveSequence);
+            animationFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             animationFrame.add(gui);
             animationFrame.pack();
             animationFrame.setVisible(true);
@@ -220,7 +229,7 @@ public class Mapmaker {
     }
 
     public static void main(String[] args) {
-        Mapmaker main = new Mapmaker();
+        MapEditor main = new MapEditor();
         main.execute();
     }
 }
