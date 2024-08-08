@@ -15,12 +15,13 @@ public class MapEditor {
         JFrame frame = new JFrame("Map Maker");
         JPanel gridPanel = new JPanel();
         JPanel rightPanel = new JPanel();
-        JButton playerButton = new JButton("<html><div style='text-align: center;'>Player</div></html>");
-        JButton playerOnGoalButton = new JButton("<html><div style='text-align: center;'>Player on Goal</div></html>");
-        JButton wallButton = new JButton("<html><div style='text-align: center;'>Wall</div></html>");
-        JButton boxButton = new JButton("<html><div style='text-align: center;'>Box</div></html>");
-        JButton greenBoxButton = new JButton("<html><div style='text-align: center;'>Box on Goal</div></html>");
-        JButton goalButton = new JButton("<html><div style='text-align: center;'>Goal</div></html>");
+        JButton playerButton = new JButton();
+        JButton playerOnGoalButton = new JButton();
+        JButton wallButton = new JButton();
+        JButton boxButton = new JButton();
+//        JButton boxButton = new JButton("<html><div style='text-align: center;'>Box</div></html>");
+        JButton greenBoxButton = new JButton();
+        JButton goalButton = new JButton();
         JButton delButton = new JButton("<html><div style='text-align: center;'>Delete</div></html>");
         JButton startButton = new JButton("<html><div style='text-align: center;'>Start</div></html>");
 
@@ -58,6 +59,8 @@ public class MapEditor {
 
         Dimension buttonSize = new Dimension(160, 80);
 
+        ImageIcon playerIcon = new ImageIcon("assets/player.png");
+        playerButton.setIcon(playerIcon);
         playerButton.setPreferredSize(buttonSize);
         playerButton.setBackground(new Color(0x072448));
         playerButton.setForeground(new Color(0xf0f0f0));
@@ -67,6 +70,8 @@ public class MapEditor {
         playerButton.addActionListener(new ComponentButton(this, '@'));
         rightPanel.add(playerButton);
 
+        ImageIcon playerGoalIcon = new ImageIcon("assets/playergoal.png");
+        playerOnGoalButton.setIcon(playerGoalIcon);
         playerOnGoalButton.setPreferredSize(buttonSize);
         playerOnGoalButton.setBackground(new Color(0x54d2d2));
         playerOnGoalButton.setForeground(new Color(0xf0f0f0));
@@ -76,6 +81,8 @@ public class MapEditor {
         playerOnGoalButton.addActionListener(new ComponentButton(this, '+'));
         rightPanel.add(playerOnGoalButton);
 
+        ImageIcon wallIcon = new ImageIcon("assets/brick.png");
+        wallButton.setIcon(wallIcon);
         wallButton.setPreferredSize(buttonSize);
         wallButton.setBackground(new Color(0xff6150));
         wallButton.setForeground(new Color(0xf0f0f0));
@@ -85,6 +92,8 @@ public class MapEditor {
         wallButton.addActionListener(new ComponentButton(this, '#'));
         rightPanel.add(wallButton);
 
+        ImageIcon boxIcon = new ImageIcon("assets/box.png");
+        boxButton.setIcon(boxIcon);
         boxButton.setPreferredSize(buttonSize);
         boxButton.setBackground(new Color(0xf8aa4b));
         boxButton.setForeground(new Color(0xf0f0f0));
@@ -94,6 +103,8 @@ public class MapEditor {
         boxButton.addActionListener(new ComponentButton(this, '$'));
         rightPanel.add(boxButton);
 
+        ImageIcon greenBoxIcon = new ImageIcon("assets/greenbox.png");
+        greenBoxButton.setIcon(greenBoxIcon);
         greenBoxButton.setPreferredSize(buttonSize);
         greenBoxButton.setBackground(new Color(0x54d2a0));
         greenBoxButton.setForeground(new Color(0xf0f0f0));
@@ -103,6 +114,8 @@ public class MapEditor {
         greenBoxButton.addActionListener(new ComponentButton(this, '*'));
         rightPanel.add(greenBoxButton);
 
+        ImageIcon goalIcon = new ImageIcon("assets/goal.png");
+        goalButton.setIcon(goalIcon);
         goalButton.setPreferredSize(buttonSize);
         goalButton.setBackground(new Color(0xffcb00));
         goalButton.setForeground(new Color(0xf0f0f0));
@@ -129,6 +142,13 @@ public class MapEditor {
         startButton.setMargin(new Insets(10, 10, 10, 10));
         startButton.addActionListener(new StartButton(this));
         rightPanel.add(startButton);
+
+        Font font = new Font("Arial", Font.BOLD, 12);
+        for (Component comp : rightPanel.getComponents()) {
+            if (comp instanceof JButton) {
+                comp.setFont(font);
+            }
+        }
 
         frame.add(gridPanel, BorderLayout.CENTER);
         frame.add(rightPanel, BorderLayout.EAST);
