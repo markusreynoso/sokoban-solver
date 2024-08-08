@@ -13,4 +13,12 @@ If you're just interested in trying out the map editor and solver, go ahead and 
 
 1. Don't add more than 1 player in the map
 2. Number of boxes should equal number of goals
-3. **Important:** Make sure the player is enclosed in walls
+3. **Important:** Make sure the player is enclosed in walls \
+Do: \
+  ![Map fully enclosed](md_assets/do.png) \
+Don't: \
+  ![Map not fully enclosed](md_assets/dont.png)
+4. If the input is a bit complicated, expect it to process for a while
+
+## That's about it
+Hope you like it :DD
