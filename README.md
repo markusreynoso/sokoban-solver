@@ -18,3 +18,4 @@ Do: \
   ![Map fully enclosed](md_assets/do.png) \
 Don't: \
   ![Map not fully enclosed](md_assets/dont.png) \
+4. If the input is a bit complicated, expect it to process for a while
