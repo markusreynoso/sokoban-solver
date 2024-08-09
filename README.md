@@ -18,7 +18,7 @@ Do: \
   ![Map fully enclosed](md_assets/do.png) \
 Don't: \
   ![Map not fully enclosed](md_assets/dont.png)
-4. If the input is a bit complicated, expect it to process for a while
+4. If the input is a bit complicated, expect it to process for a while. I recall that this algorithm could solve maps with five boxes or less in an acceptable amount of time; anythiing beyond that and it will a long time. 
 
 ## That's about it
 Hope you like it :DD
