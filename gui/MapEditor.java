@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class MapEditor {
     public char[][] map = new char[25][25];
@@ -155,7 +156,6 @@ public class MapEditor {
         frame.setVisible(true);
     }
 
-
     public static class GridButton implements ActionListener {
         private final int row;
         private final int col;
@@ -222,8 +222,16 @@ public class MapEditor {
         return copy;
     }
 
+    public static String mapToString(char[][] map) {
+        StringBuilder sb = new StringBuilder();
+        for (char[] row : map) {
+            sb.append(row);
+        }
+        return sb.toString();
+    }
 
     public static class StartButton implements ActionListener {
+        private HashMap<String, String> solutions = new HashMap<>();
         private final MapEditor main;
 
         public StartButton(MapEditor main) {
@@ -232,10 +240,19 @@ public class MapEditor {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Bot bot = new Bot();
-            String moveSequence = bot.solveSokobanPuzzle(this.main.map);
-            System.out.println(moveSequence);
             char[][] mapCopy = main.copyMap(this.main.map);
+            String mapId = mapToString(mapCopy);
+            String moveSequence;
+
+            if (!this.solutions.containsKey(mapId)){
+                Bot bot = new Bot();
+                moveSequence = bot.solveSokobanPuzzle(this.main.map);
+                this.solutions.put(mapId, moveSequence);
+            }
+            else{
+                moveSequence = this.solutions.get(mapId);
+            }
+
             JFrame animationFrame = new JFrame("Solution");
             SokobanGUI gui = new SokobanGUI(mapCopy, moveSequence);
             animationFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
