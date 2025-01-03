@@ -3,11 +3,11 @@
 ## Sokoban Description
 Sokoban is a classic puzzle video game where the player pushes some objects, trying to get them to designated tiles, often in the context of a worker pushing crates in a warehouse. The game is played on a grid of squares, where each square can be empty, a wall, a box, or a storage location. The challenge lies in the fact that the player can only push boxes (not pull), and only one box can be pushed at a time. The goal is to move all the boxes onto the storage locations with the fewest possible moves. Sokoban is known for its simple mechanics yet complex and challenging puzzles that require careful planning and strategic thinking. Sokoban is an NP-hard and PSPACE-complete problem.
 
-![Sokoban gif 1](md_assets/sokobanGif1.png)
+![Sokoban gif 1](md_assets/sokobanGif1.gif)
 
-![Sokoban gif 2](md_assets/sokobanGif2.png)
+![Sokoban gif 2](md_assets/sokobanGif2.gif)
 
-![Sokoban gif 3](md_assets/sokobanGif3.png)
+![Sokoban gif 3](md_assets/sokobanGif3.gif)
 
 ## Project Description
 This project was originally an output for my Introduction to Artificial Intelligence class which I enjoyed very much. Our main task was simply to write the algorithm that will solve at least several maps that were only available to us on the day of the presentation. We were given some Driver codes, sample maps, and basic GUI files to start us off. 
